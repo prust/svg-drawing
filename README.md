@@ -10,11 +10,11 @@ It just supports drawing a series of straight lines (no curves) and -- if you co
 
 There are many things this little app lacks:
 
-1. *The ability to save your work*. I had envisioned a simple text box so that you could give your drawing (a few shapes) a name. It would be saved to local storage via Backbone and Backbone's localStorage plugin. You would also need to be able to flip between drawings, perhaps with a Bootstrap drop-down.
-2. *The ability to make a line curved*. For this, I had envisioned a simple UI like being able to click on a line to toggle which way it curved or being able to drag it, but it wouldn't allow a discrete amount of curvedness, but would rather snap to different amounts.
-3. *The ability to draw circles and ellipses*. It's easy enough to do squares, rectangles and triangles, but it's impossible to draw circles and ellipses and even with the above ability to create a curved line, it would be a pain.
-4. *The ability to edit* (via selecting a shape or a point and dragging it).
-5. *The ability to change the granularity of grid snapping* or turn it off.
+1. **The ability to save your work**. I had envisioned a simple text box so that you could give your drawing (a few shapes) a name. It would be saved to local storage via Backbone and Backbone's localStorage plugin. You would also need to be able to flip between drawings, perhaps with a Bootstrap drop-down.
+2. **The ability to make a line curved**. For this, I had envisioned a simple UI like being able to click on a line to toggle which way it curved or being able to drag it, but it wouldn't allow a discrete amount of curvedness, but would rather snap to different amounts.
+3. **The ability to draw circles and ellipses**. It's easy enough to do squares, rectangles and triangles, but it's impossible to draw circles and ellipses and even with the above ability to create a curved line, it would be a pain.
+4. **The ability to edit** (via selecting a shape or a point and dragging it).
+5. **The ability to change the granularity of grid snapping** or turn it off.
 
 ## Code Cleanup
 
