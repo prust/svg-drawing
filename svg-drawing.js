@@ -1,8 +1,9 @@
 $(document).ready(function() {
   var current_shape;
-  
+
   attachEventHandlers();
   drawGrid();
+  createNewShape();
 
   function attachEventHandlers() {
     $('svg').on('click', function(evt) {
@@ -60,7 +61,7 @@ $(document).ready(function() {
   }
 
   function drawGrid() {
-    var start_point = new Point(60, 60);
+    var start_point = new Point(20, 20);
     var horiz_line = Line.createHorizontal(start_point, 500).color('lightGrey');
     var lines = repeatLine(horiz_line, 'Down');
     var vert_line = Line.createVertical(start_point, 500).color('lightGrey');
