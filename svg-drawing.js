@@ -7,7 +7,9 @@ $(document).ready(function() {
   createNewShape();
 
   function attachEventHandlers() {
-    $(document).on('click', function(evt) {
+    // $('svg').on('click', function(evt) {
+    d3.select('svg').on('click', function() {
+      var evt = d3.event;
       var point = getPointFromEvent(evt);
       if (point.y >= 20)
         addPointToCurrentShape(point);
@@ -106,8 +108,8 @@ $(document).ready(function() {
     var color = getColor();
     var dark_color = 'Dark' + color;
 
-    // for some reason, Grey is darker than DarkGrey
-    if (color == 'Grey') {
+    // for some reason, Salmon & Grey are darker than DarkSalmon & DarkGrey
+    if (color == 'Grey' || color == 'Salmon') {
       dark_color = getColor();
       color = 'Dark' + color;
     }
