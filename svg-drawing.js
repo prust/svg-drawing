@@ -1,6 +1,7 @@
 $(document).ready(function() {
   var current_shape;
 
+  populateColorPicker();
   attachEventHandlers();
   drawGrid();
   createNewShape();
@@ -16,6 +17,7 @@ $(document).ready(function() {
     });
 
     $('#create_shape').on('click', createNewShape);
+    $('#colors').on('change', applyColors);
   }
 
   function addPointToCurrentShape(point) {
@@ -46,6 +48,7 @@ $(document).ready(function() {
 
   function createNewShape() {
     current_shape = new SVGShape(new Shape());
+    applyColors();
     $('svg').append(current_shape.el);
   }
 
@@ -78,5 +81,32 @@ $(document).ready(function() {
     return _(range).map(function(distance) {
       return line_template.clone()[method_name](distance);
     });
+  }
+
+  function populateColorPicker() {
+    // all the HTML colors that support a 'Dark' prefix
+    var colors = ['Blue', 'Cyan', 'GoldenRod', 'Grey', 'Green', 'Khaki', 'Magenta', 'OliveGreen', 'Orange', 'Orchid', 'Red', 'Salmon', 'SeaGreen', 'SlateBlue', 'SlateGrey', 'Turquoise', 'Violet'];
+    colors.forEach(function(color) {
+      $('#colors').append($('<option>').text(color));
+    });    
+  }
+
+  function applyColors() {
+    var color = getColor();
+    var dark_color = 'Dark' + color;
+
+    // for some reason, Grey is darker than DarkGrey
+    if (color == 'Grey') {
+      dark_color = getColor();
+      color = 'Dark' + color;
+    }
+    
+    current_shape.shape.color = color;
+    current_shape.shape.border_color = dark_color;
+    current_shape.update();
+  }
+
+  function getColor() {
+    return $('#colors').val();
   }
 });
