@@ -16,7 +16,6 @@ $(document).ready(function() {
         undoLastPoint();
     });
 
-    $('#create_shape').on('click', createNewShape);
     $('#colors').on('change', applyColors);
   }
 
@@ -25,6 +24,9 @@ $(document).ready(function() {
       return;
     current_shape.shape.addPoint(point);
     current_shape.update();
+    
+    if (current_shape.shape.is_closed)
+      createNewShape();
   }
 
   function getPointFromEvent(evt) {
