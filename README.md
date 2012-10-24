@@ -30,7 +30,7 @@ I would also like to include Bootstrap and convert the button & color picker to 
 
 My goal in making this little app was to be able to create custom sprites (trees, rocks, houses, roads, spaceships, etc) for a separate app or mode that I envisioned that would allow you to build maps. That, in turn, would be used for another app or mode that would allow you to play multiplayer games online (via a simple nodejs server for syncing).
 
-I realize there are a lot of game engines available -- and even a lot of Javascript game engines. I've played with some of them a bit, but never got excited about any of them. My goal here was to create an open-source project for fun (the joy of creating; in spite of the fact that hundreds of people have written game engines and most of them are better than this) and also to create a game engine that makes sense to a web developer:
+I realize there are a lot of game engines available -- and even a lot of Javascript game engines. I've played with some of them a bit, but never got excited about any of them. My goal here was to create an open-source project for fun (the joy of creating; in spite of the fact that hundreds of people have written game engines and the vast majority of them will probably be better than mine) and also to create a game engine that makes sense to a web developer:
 
 * Using jQuery and the DOM Elements instead of a bitmap/canvas approach
 * Using Underscore and Backbone
