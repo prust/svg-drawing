@@ -26,13 +26,13 @@ I would also like to include Bootstrap and convert the button & color picker to 
 
 My goal in making this little app was to be able to create custom sprites (trees, rocks, houses, roads, spaceships, etc) for a separate app or mode that I envisioned that would allow you to build maps. That, in turn, would be used for another app or mode that would allow you to play multiplayer games online (via a simple nodejs server for syncing).
 
-I realize there are a lot of game engines available -- and even a lot of Javascript game engines. I've played with some of them a bit, but never really got excited about any of them. My goal here was to create an open-source project for fun (for the sheer enjoyment of making it, despite it replicated the work of others' and probably being inferior) and also to create a game engine that makes sense to a web app developer:
+I realize there are a lot of game engines available -- and even a lot of Javascript game engines. I've played with some of them a bit, but never got excited about any of them. My goal here was to create an open-source project for fun (the joy of creating; in spite of the fact that hundreds of people have written game engines and most of them are better than this) and also to create a game engine that makes sense to a web developer:
 
 * Using jQuery and the DOM Elements instead of a bitmap/canvas approach
-* Using Underscores and Backbone -- familiar web developer tools
+* Using Underscore and Backbone
 * Using an event-driven approach instead of the traditional "game loop"
 
-Not that this is a superior approach to create a game engine (it probably isn't), but it is an approach that is familiar to a large number of web app developers and makes it more accessible than ever for them to be able to create games for fun.
+Not that this is a superior approach to create a game engine (it probably isn't), but it is familiar to web developers and makes game creation more accessible and fun for them.
 
 Another thing that is important to me is extensibility -- creating a really open, customizable framework instead of a single game, that exposes all the power one might need for creating a variety of kinds of games. I thought it would be really cool to allow end-users to create sprites and maps and perhaps even write their own event handlers to further customize gameplay. This necessitates a well-abstracted, clean and simple API.
 
