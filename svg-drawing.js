@@ -19,6 +19,9 @@ $(document).ready(function() {
     });
 
     $('#colors').on('change', applyColors);
+    $('#colors').on('click', function(evt) {
+      return false;
+    });
   }
 
   function addPointToCurrentShape(point) {

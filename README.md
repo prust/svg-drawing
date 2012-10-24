@@ -8,7 +8,7 @@ It supports drawing a series of straight lines (no curves) and -- if you complet
 
 ## Known Bugs
 
-There is one known bug: occasionally when clicking, the click doesn't register (doesn't add a point). I haven't been able to reproduce it consistently enough to know exactly why. I tried changing my click handler from the `svg` element to the `document` element, but the bug persists.
+There is one known bug: occasionally when clicking, the click doesn't register (doesn't add a point). I haven't been able to reproduce it consistently enough to know exactly why. I tried changing my click handler from the `svg` element to the `document` element, but that didn't fix the problem.
 
 ## Drawing Functionality Ideas
 
