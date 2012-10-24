@@ -7,9 +7,7 @@ $(document).ready(function() {
   createNewShape();
 
   function attachEventHandlers() {
-    // $('svg').on('click', function(evt) {
-    d3.select('svg').on('click', function() {
-      var evt = d3.event;
+    $('svg').on('mouseup', function(evt) {
       var point = getPointFromEvent(evt);
       if (point.y >= 20)
         addPointToCurrentShape(point);
