@@ -36,7 +36,7 @@ $(document).ready(function() {
 
   function getPointFromEvent(evt) {
     var point = new Point(evt.pageX, evt.pageY);
-    point = makePointRelativeToElement(point, $('svg'));
+    point = makePointRelativeToElement(point, $('#svg_wrapper'));
     return snapPoint(point);
   }
 
