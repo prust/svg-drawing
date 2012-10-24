@@ -6,6 +6,10 @@ This is a *very* simple drawing app that I wrote in a few evenings & mornings. T
 
 It supports drawing a series of straight lines (no curves) and -- if you complete a shape by connecting with the start point -- it will automatically fill in the shape. It snaps to a grid and does allow you to draw outside the grid a little bit. You can undo with Ctrl+Z and create a new shape with the New Shape button.
 
+## Known Bugs
+
+There is one known bug: occasionally when clicking, the click doesn't register (doesn't add a point). I haven't been able to reproduce it consistently enough to know exactly why. I tried changing my click handler from the `svg` element to the `document` element, but the bug persists.
+
 ## Drawing Functionality Ideas
 
 There are many things this little app lacks:

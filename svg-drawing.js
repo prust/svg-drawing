@@ -7,8 +7,10 @@ $(document).ready(function() {
   createNewShape();
 
   function attachEventHandlers() {
-    $('svg').on('click', function(evt) {
-      addPointToCurrentShape(getPointFromEvent(evt));
+    $(document).on('click', function(evt) {
+      var point = getPointFromEvent(evt);
+      if (point.y >= 20)
+        addPointToCurrentShape(point);
     });
 
     $(document).on('keydown', function(evt) {
