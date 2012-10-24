@@ -1,5 +1,5 @@
 $(document).ready(function() {
-  var current_shape;
+  var current_shape, prev_shape;
 
   populateColorPicker();
   attachEventHandlers();
@@ -51,6 +51,7 @@ $(document).ready(function() {
   }
 
   function createNewShape() {
+    prev_shape = current_shape;
     current_shape = new SVGShape(new Shape());
     applyColors();
     $('svg').append(current_shape.el);
@@ -61,10 +62,13 @@ $(document).ready(function() {
   }
 
   function undoLastPoint() {
-    if (current_shape) {
-      current_shape.shape.removeLastPoint();
-      current_shape.update();
-    }
+    if (!current_shape)
+      return;
+
+    if (!current_shape.shape.hasPoints())
+      current_shape = prev_shape;
+    current_shape.shape.removeLastPoint();
+    current_shape.update();
   }
 
   function drawGrid() {

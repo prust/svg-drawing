@@ -9,10 +9,15 @@ Shape.prototype.addPoint = function addPoint(point) {
   if (point.isEqual(this.firstPoint()))
     this.is_closed = true;
   this.points.push(point);
-}
+};
+Shape.prototype.hasPoints = function hasPoints() {
+  return this.points.length;
+};
 Shape.prototype.firstPoint = function firstPoint() {
   return this.points[0];
-}
+};
 Shape.prototype.removeLastPoint = function removeLastPoint() {
   this.points.pop();
-}
+  if (this.is_closed)
+    this.is_closed = false;
+};
