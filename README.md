@@ -12,7 +12,7 @@ There are many things this little app lacks:
 
 1. The ability to save your work. I had envisioned a simple text box so that you could give your drawing (a few shapes) a name. It would be saved to local storage via Backbone and Backbone's localStorage plugin. You would also need to be able to flip between drawings, perhaps with a Bootstrap drop-down.
 2. The ability to make a line curved. For this, I had envisioned a simple UI like being able to click on a line to toggle which way it curved or being able to drag it, but it wouldn't allow a discrete amount of curvedness, but would rather snap to different amounts.
-3. The ability to draw circles and ellipses. It's easy enough to do squares, rectangles and triangles, but it's a pain to do circles and ellipses.
+3. The ability to draw circles and ellipses. It's easy enough to do squares, rectangles and triangles, but it's impossible to draw circles and ellipses and even with the above ability to create a curved line, it would be a pain.
 4. The ability to select a shape or a point on a shape and drag it around (simple editing).
 5. The ability to change the granularity of the grid snapping or turn it off.
 
@@ -36,6 +36,6 @@ Not that this is a superior approach to create a game engine (it probably isn't)
 
 Another thing that is important to me is extensibility -- creating a really open, customizable framework instead of a single game, that exposes all the power one might need for creating a variety of kinds of games. I thought it would be really cool to allow end-users to create sprites and maps and perhaps even write their own event handlers to further customize gameplay. This necessitates a well-abstracted, clean and simple API.
 
-And lastly, the most fun games for me are multiplayer, so I hoped to allow both playing offline (solo) and playing with others online (via a nodejs server that would allow you could choose a nickname and then start a new game session with any number of other online users who have chosen nicknames and are not yet in an active game).
+And lastly, the most fun games for me are multiplayer, so I hoped to allow both playing offline (solo) and playing with others online (via a nodejs server that would allow you to choose a nickname and then start a new game session with any number of other online users who have chosen nicknames and are not yet in an active game).
 
 Anyway, those are my ideas. We'll see if they happen someday. In the meantime, enjoy this little app!
