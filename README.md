@@ -4,7 +4,7 @@ You can play with this online at http://prust.github.com/svg-drawing.
 
 This is a *very* simple drawing app that I wrote in a few evenings & mornings. The first evening I had my six-year-old son sitting next to me and testing it as I created it.
 
-It supports drawing a series of straight lines (no curves) and -- if you complete a shape by connecting with the start point -- it will automatically fill in the shape. It snaps to a grid and does allow you to draw below and to the right of the grid a little bit. You can undo with Ctrl+Z and create a new shape with the New Shape button.
+It supports drawing a series of straight lines (no curves) and -- if you complete a shape by connecting with the start point -- it will automatically fill in the shape. It snaps to a grid, but does allow you to draw outside the grid (just not above it). You can undo with Ctrl+Z and create a new shape with the New Shape button.
 
 ## Known Bugs
 
