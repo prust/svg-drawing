@@ -1,51 +1,65 @@
 $(document).ready(function() {
   var current_shape;
-
+  
+  attachEventHandlers();
   drawGrid();
 
-  $('svg').on('click', function(evt) {
+  function attachEventHandlers() {
+    $('svg').on('click', function(evt) {
+      addPointToCurrentShape(getPointFromEvent(evt));
+    });
+
+    $(document).on('keydown', function(evt) {
+      if (isCtrlZ(evt))
+        undoLastPoint();
+    });
+
+    $('#create_shape').on('click', createNewShape);
+  }
+
+  function addPointToCurrentShape(point) {
     if (!current_shape)
       return;
-
-    var svg_position = $('svg').offset();
-    var rel_position = {
-      'x': evt.pageX - svg_position.left,
-      'y': evt.pageY - svg_position.top
-    };
-    rel_position.x = snap(rel_position.x);
-    rel_position.y = snap(rel_position.y);
-
-    var mouse_position = new Point(rel_position.x, rel_position.y);
-    current_shape.shape.addPoint(mouse_position);
+    current_shape.shape.addPoint(point);
     current_shape.update();
-  });
+  }
+
+  function getPointFromEvent(evt) {
+    var point = new Point(evt.pageX, evt.pageY);
+    point = makePointRelativeToElement(point, $('svg'));
+    return snapPoint(point);
+  }
+
+  function makePointRelativeToElement(point, $el) {
+    var el_offset = $el.offset();
+    return new Point(point.x - el_offset.left, point.y - el_offset.top);
+  }
+
+  function snapPoint(point) {
+    return new Point(snap(point.x), snap(point.y));
+  }
 
   function snap(val) {
     return Math.round(val / 20) * 20;
   }
 
-  $('#create_shape').on('click', function() {
+  function createNewShape() {
     current_shape = new SVGShape(new Shape());
     $('svg').append(current_shape.el);
-  });
+  }
 
-  $(document).on('keydown', function(evt) {
-    if (String.fromCharCode(evt.which).toLowerCase() == 'z' && evt.ctrlKey) {
-      if (current_shape) {
-        current_shape.shape.removeLastPoint();
-        current_shape.update();
-      }
-      evt.preventDefault();
-      return false;
+  function isCtrlZ(evt) {
+    return String.fromCharCode(evt.which).toLowerCase() == 'z' && evt.ctrlKey;
+  }
+
+  function undoLastPoint() {
+    if (current_shape) {
+      current_shape.shape.removeLastPoint();
+      current_shape.update();
     }
-    else {
-      return true;
-    }
-  });
+  }
 
   function drawGrid() {
-    
-
     var start_point = new Point(60, 60);
     var horiz_line = Line.createHorizontal(start_point, 500).color('lightGrey');
     var lines = repeatLine(horiz_line, 'Down');
@@ -56,6 +70,7 @@ $(document).ready(function() {
       $('svg').append(new SVGLine(line).update().el);
     });
   }
+
   function repeatLine(line_template, direction) {
     var method_name = 'move' + direction;
     var range = _.range(0, 501, 20);
