@@ -86,7 +86,7 @@ $(document).ready(function() {
 
   function populateColorPicker() {
     // all the HTML colors that support a 'Dark' prefix
-    var colors = ['Blue', 'Cyan', 'GoldenRod', 'Grey', 'Green', 'Khaki', 'Magenta', 'OliveGreen', 'Orange', 'Orchid', 'Red', 'Salmon', 'SeaGreen', 'SlateBlue', 'SlateGrey', 'Turquoise', 'Violet'];
+    var colors = ['Blue', 'Cyan', 'GoldenRod', 'Grey', 'Green', 'Khaki', 'Magenta', 'OliveGreen', 'Orange', 'Orchid', 'Red', 'Salmon', 'SeaGreen', 'SlateBlue', 'SlateGrey', 'Turquoise', 'Violet', 'Brown'];
     colors.forEach(function(color) {
       $('#colors').append($('<option>').text(color));
     });    
