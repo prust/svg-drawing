@@ -8,6 +8,7 @@ $(document).ready(function() {
   
   populateColorPicker();
   changeColor();
+  populateSpritePicker();
 
   attachEventHandlers();
   
@@ -35,9 +36,14 @@ $(document).ready(function() {
       $('#sprite_name').val('');
       $('#sprite_name').focus();
     });
-    $('#save_ok').on('click',function() {
+    $('#save_ok').on('click', function() {
       sprite.save($('#sprite_name').val());
       $('#save_details').hide();
+    });
+    $('#place_sprite').on('click', function() {
+      var sprite_name = $('#sprites').val();
+      var sprite = Sprite.deserialize(localStorage.getItem(sprite_name));
+      $('svg').append(new SVGSprite(sprite).el);
     });
   }
 
@@ -86,10 +92,18 @@ $(document).ready(function() {
 
   function populateColorPicker() {
     // all the HTML colors that support a 'Dark' prefix
-    var colors = ['Blue', 'Cyan', 'GoldenRod', 'Grey', 'Green', 'Khaki', 'Magenta', 'OliveGreen', 'Orange', 'Orchid', 'Red', 'Salmon', 'SeaGreen', 'SlateBlue', 'SlateGrey', 'Turquoise', 'Violet', 'Brown'];
+    var colors = ['Blue', 'Cyan', 'GoldenRod', 'Grey', 'Green', 'Khaki', 'Magenta', 'OliveGreen', 'Orange', 'Orchid', 'Red', 'Salmon', 'SeaGreen', 'SlateBlue', 'SlateGrey', 'Turquoise', 'Violet', 'Brown', 'Black'];
     colors.forEach(function(color) {
       $('#colors').append($('<option>').text(color));
     });    
+  }
+  function populateSpritePicker() {
+    var sprite_names = getSpriteNames();
+  }
+  function getSpriteNames() {
+    return _.range(localStorage.length).map(function(sprite_ix) {
+      return localStorage.key(sprite_ix);
+    });
   }
 
   function changeColor() {

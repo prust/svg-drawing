@@ -39,6 +39,8 @@ Shape.prototype.applyColor = function applyColor(color) {
     color = 'Sienna';
     dark_color = 'SaddleBrown';
   }
+  if (color == 'Black')
+    dark_color = 'Black';
   
   this.color = color;
   this.border_color = dark_color;
