@@ -22,6 +22,9 @@ $(document).ready(function() {
       if (isCtrlZ(evt))
         sprite.undoLastPoint();
     });
+    $('#undo').on('click', function() {
+      sprite.undoLastPoint();
+    });
 
     $('#colors').on('change', changeColor);
     $('#colors').on('click', function(evt) {
