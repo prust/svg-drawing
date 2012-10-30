@@ -4,6 +4,9 @@ function SVGShape(shape) {
   this.el = this.createEl();
   this.$el = $(this.el);
   this.update();
+  this.shape.onChange(function() {
+    this.update();
+  }.bind(this));
 }
 SVGShape.prototype.update = function update() {
   this.$el.attr('points', this.shape.points.join(' '));

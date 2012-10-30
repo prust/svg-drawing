@@ -10,15 +10,17 @@
   <script src="Point.js"></script>
   <script src="Shape.js"></script>
   <script src="Line.js"></script>
+  <script src="Sprite.js"></script>
 
   <!-- views -->
   <script src="SVGShape.js"></script>
   <script src="SVGLine.js"></script>
+  <script src="SVGSprite.js"></script>
 
   <script src="svg-drawing.js"></script>
 </head>
 <body>
-<label for="colors">Shape Color:</label> <select id="colors"></select><br>
+<label for="colors">Shape Color:</label> <select id="colors"></select> <button id="save_sprite">Save Sprite</button><span style="display:none" id="save_details"><input id="sprite_name"><button id="save_ok">OK</button></span><br>
 <em>Click two different points to start drawing your first shape!</em>
 <div id="svg_wrapper"><svg height="800" width="800" xmlns="http://www.w3.org/2000/svg"></svg></div>
 </body>

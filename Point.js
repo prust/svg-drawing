@@ -13,3 +13,9 @@ Point.prototype.isEqual = function isEqual(point) {
 Point.prototype.clone = function clone() {
   return new Point(this.x, this.y);
 }
+Point.prototype.toJSON = function toJSON() {
+  return {
+  	'x': this.x,
+  	'y': this.y
+  }
+}

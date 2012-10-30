@@ -1,37 +1,41 @@
 $(document).ready(function() {
-  var current_shape, prev_shape;
-
-  populateColorPicker();
-  attachEventHandlers();
+  
   drawGrid();
-  createNewShape();
 
+  var sprite = new Sprite();
+  var svg_sprite = new SVGSprite(sprite);
+  $('svg').append(svg_sprite.el);
+  
+  populateColorPicker();
+  changeColor();
+
+  attachEventHandlers();
+  
   function attachEventHandlers() {
     $('svg').on('mouseup', function(evt) {
       var point = getPointFromEvent(evt);
       if (point.y >= 20)
-        addPointToCurrentShape(point);
+        svg_sprite.addPoint(point);
     });
 
     $(document).on('keydown', function(evt) {
       if (isCtrlZ(evt))
-        undoLastPoint();
+        sprite.undoLastPoint();
     });
 
-    $('#colors').on('change', applyColors);
+    $('#colors').on('change', changeColor);
     $('#colors').on('click', function(evt) {
       return false;
     });
-  }
-
-  function addPointToCurrentShape(point) {
-    if (!current_shape)
-      return;
-    current_shape.shape.addPoint(point);
-    current_shape.update();
-    
-    if (current_shape.shape.is_closed)
-      createNewShape();
+    $('#save_sprite').on('click', function() {
+      $('#save_details').show();
+      $('#sprite_name').val('');
+      $('#sprite_name').focus();
+    });
+    $('#save_ok').on('click',function() {
+      sprite.save($('#sprite_name').val());
+      $('#save_details').hide();
+    });
   }
 
   function getPointFromEvent(evt) {
@@ -53,25 +57,8 @@ $(document).ready(function() {
     return Math.round(val / 20) * 20;
   }
 
-  function createNewShape() {
-    prev_shape = current_shape;
-    current_shape = new SVGShape(new Shape());
-    applyColors();
-    $('svg').append(current_shape.el);
-  }
-
   function isCtrlZ(evt) {
     return String.fromCharCode(evt.which).toLowerCase() == 'z' && evt.ctrlKey;
-  }
-
-  function undoLastPoint() {
-    if (!current_shape)
-      return;
-
-    if (!current_shape.shape.hasPoints())
-      current_shape = prev_shape;
-    current_shape.shape.removeLastPoint();
-    current_shape.update();
   }
 
   function drawGrid() {
@@ -102,22 +89,7 @@ $(document).ready(function() {
     });    
   }
 
-  function applyColors() {
-    var color = getColor();
-    var dark_color = 'Dark' + color;
-
-    // for some reason, Salmon & Grey are darker than DarkSalmon & DarkGrey
-    if (color == 'Grey' || color == 'Salmon') {
-      dark_color = getColor();
-      color = 'Dark' + color;
-    }
-    
-    current_shape.shape.color = color;
-    current_shape.shape.border_color = dark_color;
-    current_shape.update();
-  }
-
-  function getColor() {
-    return $('#colors').val();
+  function changeColor() {
+    svg_sprite.setCurrentColor($('#colors').val());
   }
 });
