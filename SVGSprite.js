@@ -10,6 +10,9 @@ function SVGSprite(sprite) {
   	this.$el.append(new SVGShape(shp).el);
   }.bind(this))
 }
+SVGSprite.prototype.scale = function scale(new_scale) {
+  this.$el.attr('transform', 'scale(' + new_scale + ')');
+}
 // pull into shared SVGElement base class
 SVGSprite.prototype.createEl = function createEl() {
   return document.createElementNS('http://www.w3.org/2000/svg', this.tag);
