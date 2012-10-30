@@ -42,7 +42,7 @@ $(document).ready(function() {
     });
     $('#place_sprite').on('click', function() {
       var sprite_name = $('#sprites').val();
-      var sprite = Sprite.deserialize(localStorage.getItem(sprite_name));
+      var sprite = Sprite.deserialize(JSON.parse(localStorage.getItem(sprite_name)));
       $('svg').append(new SVGSprite(sprite).el);
     });
   }
@@ -93,12 +93,16 @@ $(document).ready(function() {
   function populateColorPicker() {
     // all the HTML colors that support a 'Dark' prefix
     var colors = ['Blue', 'Cyan', 'GoldenRod', 'Grey', 'Green', 'Khaki', 'Magenta', 'OliveGreen', 'Orange', 'Orchid', 'Red', 'Salmon', 'SeaGreen', 'SlateBlue', 'SlateGrey', 'Turquoise', 'Violet', 'Brown', 'Black'];
-    colors.forEach(function(color) {
-      $('#colors').append($('<option>').text(color));
-    });    
+    populateSelect($('#colors'), colors);
   }
   function populateSpritePicker() {
     var sprite_names = getSpriteNames();
+    populateSelect($('#sprites'), sprite_names);
+  }
+  function populateSelect($el, options) {
+    options.forEach(function(opt) {
+      $el.append($('<option>').text(opt));
+    });
   }
   function getSpriteNames() {
     return _.range(localStorage.length).map(function(sprite_ix) {

@@ -4,7 +4,19 @@ function Shape() {
   this.border_color = 'black';
   this.border_width = 2;
   this.is_closed = false;
-}
+};
+Shape.deserialize = function deserialize(raw_shape) {
+  var shape = new Shape();
+  shape.color = raw_shape.color;
+  shape.border_color = raw_shape.border_color;
+  shape.border_width = raw_shape.border_width;
+  shape.is_closed = raw_shape.is_closed;
+  raw_shape.points.forEach(function(raw_point) {
+    var point = Point.deserialize(raw_point);
+    shape.addPoint(point);
+  });
+  return shape;
+};
 Shape.prototype.addPoint = function addPoint(point) {
   if (point.isEqual(this.firstPoint()))
     this.is_closed = true;

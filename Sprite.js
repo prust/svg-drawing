@@ -3,6 +3,14 @@ function Sprite() {
   this.createNewShape();
   this.current_color;
 }
+Sprite.deserialize = function(shapes) {
+  var sprite = new Sprite();
+  shapes.forEach(function(raw_shape) {
+    var shape = Shape.deserialize(raw_shape);
+    sprite.addShape(shape);
+  });
+  return sprite;
+}
 Sprite.prototype.setCurrentColor = function setCurrentColor(color) {
   this.getLastShape().applyColor(color);
   this.current_color = color;
