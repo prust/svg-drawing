@@ -52,20 +52,12 @@ $(document).ready(function() {
   function getPointFromEvent(evt) {
     var point = new Point(evt.pageX, evt.pageY);
     point = makePointRelativeToElement(point, $('#svg_wrapper'));
-    return snapPoint(point);
+    return point.snap();
   }
 
   function makePointRelativeToElement(point, $el) {
     var el_offset = $el.offset();
     return new Point(point.x - el_offset.left, point.y - el_offset.top);
-  }
-
-  function snapPoint(point) {
-    return new Point(snap(point.x), snap(point.y));
-  }
-
-  function snap(val) {
-    return Math.round(val / 20) * 20;
   }
 
   function isCtrlZ(evt) {
