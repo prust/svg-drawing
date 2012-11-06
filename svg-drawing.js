@@ -11,6 +11,9 @@ $(document).ready(function() {
   populateSpritePicker();
 
   attachEventHandlers();
+
+  var left_interval_id;
+  var right_interval_id;
   
   function attachEventHandlers() {
     $('svg').on('mouseup', function(evt) {
@@ -22,6 +25,24 @@ $(document).ready(function() {
     $(document).on('keydown', function(evt) {
       if (isCtrlZ(evt))
         sprite.undoLastPoint();
+      if (isSpace(evt)) {
+        evt.preventDefault();
+        svg_sprite.jump();
+      }
+      if (isRight(evt) && !right_interval_id)
+        right_interval_id = setInterval(svg_sprite.goRight.bind(svg_sprite), 40);
+      if (isLeft(evt) && !left_interval_id)
+        left_interval_id = setInterval(svg_sprite.goLeft.bind(svg_sprite), 40);
+    });
+    $(document).on('keyup', function(evt) {
+      if (isRight(evt)) {
+        clearInterval(right_interval_id);
+        right_interval_id = null;
+      }
+      else if (isLeft(evt)) {
+        clearInterval(left_interval_id);
+        left_interval_id = null;
+      }
     });
     $('#undo').on('click', function() {
       sprite.undoLastPoint();
@@ -62,6 +83,15 @@ $(document).ready(function() {
 
   function isCtrlZ(evt) {
     return String.fromCharCode(evt.which).toLowerCase() == 'z' && evt.ctrlKey;
+  }
+  function isSpace(evt) {
+    return String.fromCharCode(evt.which) == ' ';
+  }
+  function isRight(evt) {
+    return evt.keyCode == 39;
+  }
+  function isLeft(evt) {
+    return evt.keyCode == 37;
   }
 
   function drawGrid() {

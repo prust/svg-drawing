@@ -36,6 +36,47 @@ function SVGSprite(sprite) {
     evt.stopPropagation();
   }.bind(this));
 }
+SVGSprite.prototype.jump = function jump() {
+  var start_time = new Date().getTime();
+  var start_value = this.offset.y;
+  delta_value = -60;
+  duration = 500;
+  var easing = Easing.easeOutQuad.bind(null, start_value, delta_value, duration);
+  var interval_id = setInterval(function() {
+    var delta_time = new Date().getTime() - start_time;
+    var val = easing(delta_time);
+    this.offset.y = val;
+    this.update();
+
+    if (delta_time >= 500)
+      clearInterval(interval_id);
+  }.bind(this));
+
+  setTimeout(function() {
+    var start_time = new Date().getTime();
+    var start_value = this.offset.y;
+    delta_value = 60;
+    duration = 500;
+    var easing = Easing.easeInQuad.bind(null, start_value, delta_value, duration);
+    var interval_id = setInterval(function() {
+      var delta_time = new Date().getTime() - start_time;
+      var val = easing(delta_time);
+      this.offset.y = val;
+      this.update();
+
+      if (delta_time >= 500)
+        clearInterval(interval_id);
+    }.bind(this));
+  }.bind(this), 500)
+};
+SVGSprite.prototype.goRight = function goRight() {
+  this.offset.x += 5;
+  this.update();
+};
+SVGSprite.prototype.goLeft = function goLeft() {
+  this.offset.x -= 5;
+  this.update();
+};
 SVGSprite.prototype.scale = function scale(new_scale) {
   this.scale = new_scale;
   this.update();
