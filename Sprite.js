@@ -2,6 +2,7 @@ function Sprite() {
   this.shapes = [];
   this.createNewShape();
   this.current_color;
+  this.offset = new Point(0, 0);
 }
 Sprite.deserialize = function(shapes) {
   var sprite = new Sprite();
@@ -31,6 +32,7 @@ Sprite.prototype.createNewShape = function createNewShape() {
     this.on_add_shape(shape);
 }
 Sprite.prototype.addPoint = function addPoint(point) {
+  point = point.diff(this.offset);
   var last_shape = this.getLastShape();
   last_shape.addPoint(point);
   if (last_shape.is_closed)
