@@ -2,7 +2,7 @@ function SVGSprite(sprite) {
   this.dragging = false;
   this.start_point = null;
   this.offset = new Point(0, 0);
-  this.scale = 1;
+  this._scale = 1;
 
   this.tag = 'g';
   this.sprite = sprite;
@@ -78,7 +78,7 @@ SVGSprite.prototype.goLeft = function goLeft() {
   this.update();
 };
 SVGSprite.prototype.scale = function scale(new_scale) {
-  this.scale = new_scale;
+  this._scale = new_scale;
   this.update();
 }
 // pull into shared SVGElement base class
