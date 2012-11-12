@@ -63,10 +63,9 @@ $(document).ready(function() {
     });
     $('#place_sprite').on('click', function() {
       var sprite_name = $('#sprites').val();
-      var sprite = Sprite.deserialize(JSON.parse(localStorage.getItem(sprite_name)));
-      sprite.scale(parseFloat($('#placement_size').val()));
-      var svg_sprite = new SVGSprite(sprite);
-      $('svg').append(svg_sprite.el);
+      var placed_sprite = Sprite.deserialize(JSON.parse(localStorage.getItem(sprite_name)));
+      placed_sprite.scale(parseFloat($('#placement_size').val()));
+      sprite.addSprite(placed_sprite);
     });
   }
 

@@ -6,6 +6,7 @@ function SVGSprite(sprite) {
   this.sprite = sprite;
   this.el = this.createEl();
   this.$el = $(this.el);
+  this.update();
 
   this.sprite.getShapes().forEach(function(shp) {
     this.$el.append(new SVGShape(shp).el);
@@ -13,11 +14,19 @@ function SVGSprite(sprite) {
   this.sprite.onAddShape(function(shp) {
   	this.$el.append(new SVGShape(shp).el);
   }.bind(this));
+  this.sprite.sprites.forEach(function(sprite) {
+    this.$el.append(new SVGSprite(sprite).el);
+  }.bind(this));
+  this.sprite.onAddSprite(function(sprite) {
+    this.$el.append(new SVGSprite(sprite).el);
+  }.bind(this));
   this.$el.on('mousedown', function(evt) {
+    evt.stopPropagation();
     this.dragging = true;
     this.start_point = new Point(evt.pageX, evt.pageY).diff(this.sprite.offset);
   }.bind(this));
   this.$el.on('mousemove', function(evt) {
+    evt.stopPropagation();
     if (this.dragging && this.start_point) {
       var current_pos = new Point(evt.pageX, evt.pageY);
       var pos_diff = current_pos.diff(this.start_point);

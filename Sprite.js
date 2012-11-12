@@ -1,16 +1,9 @@
 function Sprite() {
   this.shapes = [];
+  this.sprites = [];
   this.createNewShape();
   this.current_color;
   this.offset = new Point(0, 0);
-}
-Sprite.deserialize = function(shapes) {
-  var sprite = new Sprite();
-  shapes.forEach(function(raw_shape) {
-    var shape = Shape.deserialize(raw_shape);
-    sprite.addShape(shape);
-  });
-  return sprite;
 }
 Sprite.prototype.setCurrentColor = function setCurrentColor(color) {
   this.getLastShape().applyColor(color);
@@ -41,6 +34,9 @@ Sprite.prototype.addPoint = function addPoint(point) {
 Sprite.prototype.onAddShape = function onAddShape(fn) {
   this.on_add_shape = fn;
 }
+Sprite.prototype.onAddSprite = function onAddSprite(fn) {
+  this.on_add_sprite = fn;
+}
 Sprite.prototype.undoLastPoint = function undoLastPoint() {
   var current_shape = this.getLastShape();
 
@@ -55,9 +51,41 @@ Sprite.prototype.scale = function scale(scale) {
     shape.scale(scale);
   });
 }
+Sprite.prototype.addSprite = function addSprite(sprite) {
+  this.sprites.push(sprite);
+  if (this.on_add_sprite)
+    this.on_add_sprite(sprite);
+}
 Sprite.prototype.save = function save(sprite_name) {
   localStorage.setItem(sprite_name, JSON.stringify(this));
 }
 Sprite.prototype.toJSON = function toJSON() {
-  return this.shapes;
+  return {
+    'shapes': this.shapes,
+    'sprites': this.sprites,
+    'offset': this.offset
+  };
+}
+Sprite.deserialize = function(raw_obj) {
+  // support old versions
+  if (_(raw_obj).isArray())
+    raw_obj = {'shapes': raw_obj};
+
+  var sprite = new Sprite();
+  raw_obj.shapes.forEach(function(raw_shape) {
+    var shape = Shape.deserialize(raw_shape);
+    sprite.addShape(shape);
+  });
+
+  if (raw_obj.sprites) {
+    raw_obj.sprites.forEach(function(raw_sprite) {
+      var child_sprite = Sprite.deserialize(raw_sprite);
+      sprite.addSprite(child_sprite);
+    });
+  }
+
+  if (raw_obj.offset)
+    sprite.offset = Point.deserialize(raw_obj.offset);
+
+  return sprite;
 }
