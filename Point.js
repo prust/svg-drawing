@@ -24,6 +24,10 @@ Point.prototype.add = function add(other_point) {
   this.y += other_point.y;
   return this;
 };
+Point.prototype.scale = function scale(scale) {
+  this.x *= scale;
+  this.y *= scale;
+};
 Point.prototype.snap = function snap() {
   this.x = snap(this.x);
   this.y = snap(this.y);

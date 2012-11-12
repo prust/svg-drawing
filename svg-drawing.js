@@ -64,8 +64,8 @@ $(document).ready(function() {
     $('#place_sprite').on('click', function() {
       var sprite_name = $('#sprites').val();
       var sprite = Sprite.deserialize(JSON.parse(localStorage.getItem(sprite_name)));
+      sprite.scale(parseFloat($('#placement_size').val()));
       var svg_sprite = new SVGSprite(sprite);
-      svg_sprite.scale($('#placement_size').val());
       $('svg').append(svg_sprite.el);
     });
   }

@@ -2,7 +2,6 @@ function SVGSprite(sprite) {
   this.dragging = false;
   this.start_point = null;
   this.offset = new Point(0, 0);
-  this._scale = 1;
 
   this.tag = 'g';
   this.sprite = sprite;
@@ -77,10 +76,6 @@ SVGSprite.prototype.goLeft = function goLeft() {
   this.offset.x -= 5;
   this.update();
 };
-SVGSprite.prototype.scale = function scale(new_scale) {
-  this._scale = new_scale;
-  this.update();
-}
 // pull into shared SVGElement base class
 SVGSprite.prototype.createEl = function createEl() {
   return document.createElementNS('http://www.w3.org/2000/svg', this.tag);
@@ -92,5 +87,5 @@ SVGSprite.prototype.setCurrentColor = function setCurrentColor(color) {
   this.sprite.setCurrentColor(color);
 }
 SVGSprite.prototype.update = function update() {
-  this.$el.attr('transform', 'scale(' + this._scale + ') translate(' + this.offset + ')')
+  this.$el.attr('transform', 'translate(' + this.offset + ')')
 }

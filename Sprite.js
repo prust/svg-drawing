@@ -48,6 +48,11 @@ Sprite.prototype.undoLastPoint = function undoLastPoint() {
   }
   current_shape.removeLastPoint();
 }
+Sprite.prototype.scale = function scale(scale) {
+  this.shapes.forEach(function(shape) {
+    shape.scale(scale);
+  });
+}
 Sprite.prototype.save = function save(sprite_name) {
   localStorage.setItem(sprite_name, JSON.stringify(this));
 }

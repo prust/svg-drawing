@@ -63,6 +63,11 @@ Shape.prototype.applyColor = function applyColor(color) {
 Shape.prototype.onChange = function onChange(fn) {
   this.on_change = fn;
 }
+Shape.prototype.scale = function scale(scale) {
+  this.points.forEach(function(pt) {
+    pt.scale(scale);
+  });
+}
 Shape.prototype.toJSON = function toJSON() {
   return {
     'points': this.points,
