@@ -92,5 +92,5 @@ SVGSprite.prototype.setCurrentColor = function setCurrentColor(color) {
   this.sprite.setCurrentColor(color);
 }
 SVGSprite.prototype.update = function update() {
-  this.$el.attr('transform', 'scale(' + this.scale + ') translate(' + this.offset + ')')
+  this.$el.attr('transform', 'scale(' + this._scale + ') translate(' + this.offset + ')')
 }
