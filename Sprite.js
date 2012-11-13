@@ -88,7 +88,7 @@
 
         if (delta_time >= 500)
           clearInterval(interval_id);
-      }.bind(this));
+      }.bind(this), 10);
 
       setTimeout(function() {
         var start_time = new Date().getTime();
@@ -103,7 +103,7 @@
 
           if (delta_time >= 500)
             clearInterval(interval_id);
-        }.bind(this));
+        }.bind(this), 10);
       }.bind(this), 500)
     },
 
