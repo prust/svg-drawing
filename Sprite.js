@@ -7,7 +7,11 @@
     this.sprites = [];
     this.createNewShape();
     this.current_color;
+    
     this.offset = new Point(0, 0);
+    this.offset.on('change', function() {
+      this.trigger('change');
+    }.bind(this));
   }
   _.extend(Sprite.prototype, Backbone.Events, {
 
@@ -61,6 +65,46 @@
     'addSprite': function addSprite(sprite) {
       this.sprites.push(sprite);
       this.trigger('sprite:add', sprite);
+    },
+
+    'goRight': function goRight() {
+      this.offset.x += 5;
+    },
+
+    'goLeft': function goLeft() {
+      this.offset.x -= 5;
+    },
+
+    'jump': function jump() {
+      var start_time = new Date().getTime();
+      var start_value = this.offset.y;
+      delta_value = -60;
+      duration = 500;
+      var easing = Easing.easeOutQuad.bind(null, start_value, delta_value, duration);
+      var interval_id = setInterval(function() {
+        var delta_time = new Date().getTime() - start_time;
+        var val = easing(delta_time);
+        this.offset.y = val;
+
+        if (delta_time >= 500)
+          clearInterval(interval_id);
+      }.bind(this));
+
+      setTimeout(function() {
+        var start_time = new Date().getTime();
+        var start_value = this.offset.y;
+        delta_value = 60;
+        duration = 500;
+        var easing = Easing.easeInQuad.bind(null, start_value, delta_value, duration);
+        var interval_id = setInterval(function() {
+          var delta_time = new Date().getTime() - start_time;
+          var val = easing(delta_time);
+          this.offset.y = val;
+
+          if (delta_time >= 500)
+            clearInterval(interval_id);
+        }.bind(this));
+      }.bind(this), 500)
     },
 
     'save': function save(sprite_name) {

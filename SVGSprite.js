@@ -8,6 +8,10 @@ function SVGSprite(sprite) {
   this.$el = $(this.el);
   this.update();
 
+  this.sprite.on('change', function() {
+    this.update();
+  }.bind(this));
+
   this.sprite.getShapes().forEach(function(shp) {
     this.$el.append(new SVGShape(shp).el);
   }.bind(this));
@@ -20,6 +24,7 @@ function SVGSprite(sprite) {
   this.sprite.on('sprite:add', function(sprite) {
     this.$el.append(new SVGSprite(sprite).el);
   }.bind(this));
+
   this.$el.on('mousedown', function(evt) {
     evt.stopPropagation();
     this.dragging = true;
@@ -32,8 +37,8 @@ function SVGSprite(sprite) {
       var pos_diff = current_pos.diff(this.start_point);
       pos_diff.snap();
 
-      this.sprite.offset = pos_diff;
-      this.update();
+      this.sprite.offset.x = pos_diff.x;
+      this.sprite.offset.y = pos_diff.y;
     }
   }.bind(this));
   this.$el.on('mouseup', function(evt) {
@@ -43,57 +48,11 @@ function SVGSprite(sprite) {
     evt.stopPropagation();
   }.bind(this));
 }
-SVGSprite.prototype.jump = function jump() {
-  var start_time = new Date().getTime();
-  var start_value = this.sprite.offset.y;
-  delta_value = -60;
-  duration = 500;
-  var easing = Easing.easeOutQuad.bind(null, start_value, delta_value, duration);
-  var interval_id = setInterval(function() {
-    var delta_time = new Date().getTime() - start_time;
-    var val = easing(delta_time);
-    this.sprite.offset.y = val;
-    this.update();
 
-    if (delta_time >= 500)
-      clearInterval(interval_id);
-  }.bind(this));
-
-  setTimeout(function() {
-    var start_time = new Date().getTime();
-    var start_value = this.sprite.offset.y;
-    delta_value = 60;
-    duration = 500;
-    var easing = Easing.easeInQuad.bind(null, start_value, delta_value, duration);
-    var interval_id = setInterval(function() {
-      var delta_time = new Date().getTime() - start_time;
-      var val = easing(delta_time);
-      this.sprite.offset.y = val;
-      this.update();
-
-      if (delta_time >= 500)
-        clearInterval(interval_id);
-    }.bind(this));
-  }.bind(this), 500)
-};
-SVGSprite.prototype.goRight = function goRight() {
-  this.sprite.offset.x += 5;
-  this.update();
-};
-SVGSprite.prototype.goLeft = function goLeft() {
-  this.sprite.offset.x -= 5;
-  this.update();
-};
 // pull into shared SVGElement base class
 SVGSprite.prototype.createEl = function createEl() {
   return document.createElementNS('http://www.w3.org/2000/svg', this.tag);
 };
-SVGSprite.prototype.addPoint = function addPoint(point) {
-  this.sprite.addPoint(point);
-}
-SVGSprite.prototype.setCurrentColor = function setCurrentColor(color) {
-  this.sprite.setCurrentColor(color);
-}
 SVGSprite.prototype.update = function update() {
   this.$el.attr('transform', 'translate(' + this.sprite.offset + ')')
 }

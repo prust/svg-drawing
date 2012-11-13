@@ -19,7 +19,7 @@ $(document).ready(function() {
     $('svg').on('mouseup', function(evt) {
       var point = getPointFromEvent(evt);
       if (point.y >= 20)
-        svg_sprite.addPoint(point);
+        sprite.addPoint(point);
     });
 
     $(document).on('keydown', function(evt) {
@@ -27,12 +27,12 @@ $(document).ready(function() {
         sprite.undoLastPoint();
       if (isSpace(evt)) {
         evt.preventDefault();
-        svg_sprite.jump();
+        sprite.jump();
       }
       if (isRight(evt) && !right_interval_id)
-        right_interval_id = setInterval(svg_sprite.goRight.bind(svg_sprite), 40);
+        right_interval_id = setInterval(sprite.goRight.bind(sprite), 40);
       if (isLeft(evt) && !left_interval_id)
-        left_interval_id = setInterval(svg_sprite.goLeft.bind(svg_sprite), 40);
+        left_interval_id = setInterval(sprite.goLeft.bind(sprite), 40);
     });
     $(document).on('keyup', function(evt) {
       if (isRight(evt)) {
@@ -134,6 +134,6 @@ $(document).ready(function() {
   }
 
   function changeColor() {
-    svg_sprite.setCurrentColor($('#colors').val());
+    sprite.setCurrentColor($('#colors').val());
   }
 });
