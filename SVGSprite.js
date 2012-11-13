@@ -11,13 +11,13 @@ function SVGSprite(sprite) {
   this.sprite.getShapes().forEach(function(shp) {
     this.$el.append(new SVGShape(shp).el);
   }.bind(this));
-  this.sprite.onAddShape(function(shp) {
+  this.sprite.on('shape:add', function(shp) {
   	this.$el.append(new SVGShape(shp).el);
   }.bind(this));
   this.sprite.sprites.forEach(function(sprite) {
     this.$el.append(new SVGSprite(sprite).el);
   }.bind(this));
-  this.sprite.onAddSprite(function(sprite) {
+  this.sprite.on('sprite:add', function(sprite) {
     this.$el.append(new SVGSprite(sprite).el);
   }.bind(this));
   this.$el.on('mousedown', function(evt) {
