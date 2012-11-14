@@ -1,0 +1,6 @@
+body {
+  margin: 20px;
+}
+body.moving svg g {
+  cursor: move;
+}

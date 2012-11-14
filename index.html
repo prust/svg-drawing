@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
+  <link href="css/svg-drawing.css" rel="stylesheet" media="screen">
+
   <!-- 3rd party -->
   <script src="third-party/jquery.js"></script>
   <script src="third-party/underscore.js"></script>
@@ -21,8 +24,20 @@
   <script src="svg-drawing.js"></script>
 </head>
 <body>
-<label for="colors">Shape Color:</label> <select id="colors"></select> <button id="save_sprite">Save Sprite</button><span style="display:none" id="save_details"><input id="sprite_name"><button id="save_ok">OK</button></span> <button id="undo">Undo</button> <select id="sprites"></select> <select id="placement_size"><option value="0.25">Quarter-Size</option><option value="0.5">Half-Size</option><option value="1">Full-Size</option></select> <button id="place_sprite">Place Sprite</button><br>
-<em>Click two different points to start drawing your first shape!</em>
-<div id="svg_wrapper"><svg height="800" width="800" xmlns="http://www.w3.org/2000/svg"></svg></div>
+  Mode: 
+  <span class="btn-group mode">
+    <button class="btn btn-small drawing"><i class="icon-pencil"></i></button>
+    <button class="btn btn-small moving"><i class="icon-move"></i></button>
+    <button class="btn btn-small playing"><i class="icon-play"></i></button>
+  </span><br><br>
+
+  <span id="colors_label">Shape Color:</span> <select id="colors"></select> <button class="btn btn-small" id="undo">Undo</button><br>
+  
+  <select id="sprites"></select> <select id="placement_size"><option value="0.25">Quarter-Size</option><option value="0.5">Half-Size</option><option value="1">Full-Size</option></select> <button class="btn btn-small" id="place_sprite">Place Sprite</button><br>
+  
+  <button class="btn btn-small" id="save_sprite">Save Sprite</button><span style="display:none" id="save_details"><input id="sprite_name"><button class="btn btn-small" id="save_ok">OK</button></span><br>
+  
+  <em>Click two different points to start drawing your first shape!</em>
+  <div id="svg_wrapper"><svg height="800" width="800" xmlns="http://www.w3.org/2000/svg"></svg></div>
 </body>
 </html>

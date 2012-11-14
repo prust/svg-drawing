@@ -8,12 +8,18 @@
   
   Object.defineProperty(Point.prototype, 'x', {
    get: function() { return this._x; },
-   set: function(x) { this._x = x; this.trigger('change'); }
+   set: function(x) {
+      this._x = x;
+      this.trigger('change');
+    }
   });
 
   Object.defineProperty(Point.prototype, 'y', {
    get: function() { return this._y; },
-   set: function(y) { this._y = y; this.trigger('change'); }
+   set: function(y) {
+      this._y = y;
+      this.trigger('change');
+    }
   });
 
   _.extend(Point.prototype, Backbone.Events, {

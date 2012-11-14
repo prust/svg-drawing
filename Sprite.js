@@ -8,12 +8,16 @@
     this.createNewShape();
     this.current_color;
     
-    this.offset = new Point(0, 0);
-    this.offset.on('change', function() {
-      this.trigger('change');
-    }.bind(this));
+    this.setOffset(new Point(0, 0));
   }
   _.extend(Sprite.prototype, Backbone.Events, {
+
+    'setOffset': function setOffset(offset) {
+      this.offset = offset;
+      this.offset.on('change', function() {
+        this.trigger('change');
+      }.bind(this));
+    },
 
     'setCurrentColor': function setCurrentColor(color) {
       this.getLastShape().applyColor(color);
@@ -139,7 +143,7 @@
     }
 
     if (raw_obj.offset)
-      sprite.offset = Point.deserialize(raw_obj.offset);
+      sprite.setOffset(Point.deserialize(raw_obj.offset));
 
     return sprite;
   }

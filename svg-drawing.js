@@ -1,5 +1,10 @@
 $(document).ready(function() {
-  
+  var drag_sprite = false,
+    start_point = null;
+  var mode;
+
+  selectMode('drawing');
+
   drawGrid();
 
   var sprite = new Sprite();
@@ -17,56 +22,144 @@ $(document).ready(function() {
   
   function attachEventHandlers() {
     $('svg').on('mouseup', function(evt) {
+      if (mode != 'drawing')
+        return;
+
       var point = getPointFromEvent(evt);
       if (point.y >= 20)
         sprite.addPoint(point);
     });
 
+    $('svg').on('mousedown', 'g', function(evt) {
+      if (mode != 'moving')
+        return;
+
+      evt.originalEvent.preventDefault();
+      evt.stopPropagation();
+      drag_sprite = getSprite(this);
+      if (drag_sprite)
+        start_point = new Point(evt.pageX, evt.pageY).diff(drag_sprite.offset);
+    });
+
+    $(document).on('mousemove', function(evt) {
+      if (mode != 'moving')
+        return;
+
+      evt.stopPropagation();
+      if (drag_sprite && start_point) {
+        var current_pos = new Point(evt.pageX, evt.pageY);
+        var pos_diff = current_pos.diff(start_point);
+        pos_diff.snap();
+
+        drag_sprite.offset.x = pos_diff.x;
+        drag_sprite.offset.y = pos_diff.y;
+      }
+    });
+
+    $(document).on('mouseup', function(evt) {
+      if (mode != 'moving')
+        return;
+
+      drag_sprite = null;
+      start_point = null;
+      
+      evt.stopPropagation();
+    });
+
     $(document).on('keydown', function(evt) {
-      if (isCtrlZ(evt))
+      if (mode == 'drawing' && isCtrlZ(evt))
         sprite.undoLastPoint();
-      if (isSpace(evt)) {
-        evt.preventDefault();
-        sprite.jump();
+
+      if (mode == 'playing') {
+        if (isSpace(evt)) {
+          evt.preventDefault();
+          sprite.jump();
+        }
+        if (isRight(evt) && !right_interval_id)
+          right_interval_id = setInterval(sprite.goRight.bind(sprite), 40);
+        if (isLeft(evt) && !left_interval_id)
+          left_interval_id = setInterval(sprite.goLeft.bind(sprite), 40);
       }
-      if (isRight(evt) && !right_interval_id)
-        right_interval_id = setInterval(sprite.goRight.bind(sprite), 40);
-      if (isLeft(evt) && !left_interval_id)
-        left_interval_id = setInterval(sprite.goLeft.bind(sprite), 40);
     });
+
     $(document).on('keyup', function(evt) {
-      if (isRight(evt)) {
-        clearInterval(right_interval_id);
-        right_interval_id = null;
-      }
-      else if (isLeft(evt)) {
-        clearInterval(left_interval_id);
-        left_interval_id = null;
+      if (mode == 'playing') {
+        if (isRight(evt)) {
+          clearInterval(right_interval_id);
+          right_interval_id = null;
+        }
+        else if (isLeft(evt)) {
+          clearInterval(left_interval_id);
+          left_interval_id = null;
+        }
       }
     });
+
     $('#undo').on('click', function() {
-      sprite.undoLastPoint();
+      if (mode == 'drawing')
+        sprite.undoLastPoint();
     });
 
     $('#colors').on('change', changeColor);
     $('#colors').on('click', function(evt) {
       return false;
     });
+
     $('#save_sprite').on('click', function() {
       $('#save_details').show();
       $('#sprite_name').val('');
       $('#sprite_name').focus();
     });
+
     $('#save_ok').on('click', function() {
       sprite.save($('#sprite_name').val());
       $('#save_details').hide();
     });
+
     $('#place_sprite').on('click', function() {
       var sprite_name = $('#sprites').val();
       var placed_sprite = Sprite.deserialize(JSON.parse(localStorage.getItem(sprite_name)));
       placed_sprite.scale(parseFloat($('#placement_size').val()));
       sprite.addSprite(placed_sprite);
     });
+
+    ['drawing', 'moving', 'playing'].forEach(function(mode) {
+      $('.mode .' + mode).on('click', function() {
+        selectMode(mode);
+      });
+    });
+  }
+
+  function getSprite(el) {
+    var svg_sprite = _(SVGSprite.registry).find(function(svg_sprite) {
+      return svg_sprite.el == el;
+    });
+    if (svg_sprite)
+      return svg_sprite.sprite;
+  }
+
+  function selectMode(new_mode) {
+    mode = new_mode;
+
+    var drawing_els = $('#colors_label, #colors, #undo');
+    if (mode == 'drawing')
+      drawing_els.show();
+    else
+      drawing_els.hide();
+
+    var moving_els = $('#sprites, #placement_size, #place_sprite');
+    if (mode == 'moving')
+      moving_els.show();
+    else
+      moving_els.hide();
+
+    $('body')[0].className = mode;
+
+    $('.mode .btn').removeClass('btn-primary');
+    $('.mode .' + mode).addClass('btn-primary');
+
+    $('.mode i').removeClass('icon-white');
+    $('.mode .' + mode).find('i').addClass('icon-white');
   }
 
   function getPointFromEvent(evt) {
