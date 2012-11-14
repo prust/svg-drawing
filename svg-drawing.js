@@ -20,6 +20,30 @@ $(document).ready(function() {
   var left_interval_id;
   var right_interval_id;
   
+  // attachGameHandlers() / detachGameHandlers(), or better, new GameMode().enter() / .exit()
+  // "keyhelddown" pseudo-event like jQuery's "hover" pseudo-event
+  // for 2nd arg, user can pass a character (' ' for space), a key-code number or pseudo arrow keys: 'right', 'down', 'left', 'up'
+  // .on('keyhelddown', 'right', function() { if (evt.type == 'keydown') sprite.velocity.x = 12 elseif (evt.type == 'keyup') sprite.velocity.x = 0; })
+  // .on('keyhelddown', 'right', function() { sprite.velocity.x = 12 }, function() { sprite.velocity.x = 0 })
+
+  // if key is held down for 1 sec, increase speed
+  // .on('keyhelddown', 'right', 1000, function() { sprite.velocity.x = 24 })
+
+  // .on('keydown', ' ', function() { sprite.velocity.y = 20; })
+  // function Gravity() { this.interval = setInterval(function() { sprite.velocity.y -= 2 }, 200) }
+
+  // evt.dimension returns 'x', 'y' or 'xy' for the dimension of the collision
+  //   if, before the motion that introduced the overlap, the x was overlapping already, then it's a y collision (head-bonk)
+  //   if, before the motion that introduced the overlap, the y was overlapping already, then it's an x collision (face-bonk)
+  //   if, before the motion that introduced the overlap, neither the x nor the y overlapped, then it's an xy collision (head & face bonk)
+
+  // removeOverlap(sprite1, sprite2, dimension='xy') will move sprite1 such that it no longer overlaps sprite2.
+  // It will move it in whichever direction it is overlapping the least (if the overlap is equal it will move it up/left)
+
+  // Point has an 'xy' setter that sets both to the same value (but no getter until we find a need)
+  // the 2nd arg to the collide event is optional and can be a sprite type
+  // sprite.on('collide', 'platform', function(evt) { this.velocity[evt.dimension] = 0; removeOverlap(this, evt.collider, evt.dimension); })
+
   function attachEventHandlers() {
     $('svg').on('mouseup', function(evt) {
       if (mode != 'drawing')
