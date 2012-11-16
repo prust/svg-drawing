@@ -135,13 +135,25 @@ $(document).ready(function() {
       $('#sprite_name').focus();
     });
 
+    $('#load_sprite').on('click', function() {
+      $('#load_details').show();
+    });
+
     $('#save_ok').on('click', function() {
       sprite.save($('#sprite_name').val());
       $('#save_details').hide();
     });
 
+    $('#load_ok').on('click', function() {
+      $(svg_sprite.el).remove();
+      var sprite_name = $('#load_details select.sprites').val();
+      sprite = Sprite.deserialize(JSON.parse(localStorage.getItem(sprite_name)));
+      svg_sprite = new SVGSprite(sprite);
+      $('svg').append(svg_sprite.el);
+    });
+
     $('#place_sprite').on('click', function() {
-      var sprite_name = $('#sprites').val();
+      var sprite_name = $($('select.sprites')[0]).val();
       var placed_sprite = Sprite.deserialize(JSON.parse(localStorage.getItem(sprite_name)));
       placed_sprite.scale(parseFloat($('#placement_size').val()));
       sprite.addSprite(placed_sprite);
@@ -237,7 +249,7 @@ $(document).ready(function() {
   }
   function populateSpritePicker() {
     var sprite_names = getSpriteNames();
-    populateSelect($('#sprites'), sprite_names);
+    populateSelect($('.sprites'), sprite_names);
   }
   function populateSelect($el, options) {
     options.forEach(function(opt) {

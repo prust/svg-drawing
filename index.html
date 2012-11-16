@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
+  <link href="css/bootstrap.css" rel="stylesheet" media="screen">
   <link href="css/svg-drawing.css" rel="stylesheet" media="screen">
 
   <!-- 3rd party -->
@@ -33,8 +33,9 @@
 
   <span id="colors_label">Shape Color:</span> <select id="colors"></select> <button class="btn btn-small" id="undo">Undo</button><br>
   
-  <select id="sprites"></select> <select id="placement_size"><option value="0.25">Quarter-Size</option><option value="0.5">Half-Size</option><option value="1">Full-Size</option></select> <button class="btn btn-small" id="place_sprite">Place Sprite</button><br>
+  <select class="sprites"></select> <select id="placement_size"><option value="0.25">Quarter-Size</option><option value="0.5">Half-Size</option><option value="1">Full-Size</option></select> <button class="btn btn-small" id="place_sprite">Place Sprite</button><br>
   
+  <button class="btn btn-small" id="load_sprite">Load Sprite</button><span style="display:none" id="load_details"><select class="sprites"></select><button class="btn btn-small" id="load_ok">OK</button></span>
   <button class="btn btn-small" id="save_sprite">Save Sprite</button><span style="display:none" id="save_details"><input id="sprite_name"><button class="btn btn-small" id="save_ok">OK</button></span><br>
   
   <em>Click two different points to start drawing your first shape!</em>
