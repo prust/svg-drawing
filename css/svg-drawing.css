@@ -4,3 +4,19 @@ body {
 body.moving svg g {
   cursor: move;
 }
+body.ellipse svg {
+  cursor: crosshair;
+}
+i.dot {
+  display: inline-block;
+  background-color: black;
+  border-radius: 50%;
+  width: 14px;
+  height: 14px;
+  line-height: 14px;
+  margin-top: 0;
+  vertical-align: text-top;
+}
+i.dot.icon-white {
+  background-color: white
+}

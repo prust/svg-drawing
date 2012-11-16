@@ -90,6 +90,43 @@ $(document).ready(function() {
       evt.stopPropagation();
     });
 
+    var drag_ellipse;
+    $('svg').on('mousedown', function(evt) {
+      if (mode != 'ellipse')
+        return;
+
+      evt.originalEvent.preventDefault();
+      evt.stopPropagation();
+      start_point = getPointFromEvent(evt);
+      start_point = start_point.diff(sprite.offset);
+      drag_ellipse = new Ellipse(start_point);
+      drag_ellipse.applyColor($('#colors').val());
+      sprite.addEllipse(drag_ellipse);
+    });
+
+    $(document).on('mousemove', function(evt) {
+      if (mode != 'ellipse')
+        return;
+
+      evt.stopPropagation();
+      if (drag_ellipse && start_point) {
+        point2 = getPointFromEvent(evt);
+        point2 = point2.diff(sprite.offset);
+        point2.snap();
+        drag_ellipse.setPoint2(point2);
+      }
+    });
+
+    $(document).on('mouseup', function(evt) {
+      if (mode != 'ellipse')
+        return;
+
+      drag_ellipse = null;
+      start_point = null;
+      
+      evt.stopPropagation();
+    });
+
     $(document).on('keydown', function(evt) {
       if (mode == 'drawing' && isCtrlZ(evt))
         sprite.undoLastPoint();
@@ -159,7 +196,7 @@ $(document).ready(function() {
       sprite.addSprite(placed_sprite);
     });
 
-    ['drawing', 'moving', 'playing'].forEach(function(mode) {
+    ['drawing', 'ellipse', 'moving', 'playing'].forEach(function(mode) {
       $('.mode .' + mode).on('click', function() {
         selectMode(mode);
       });
@@ -182,6 +219,12 @@ $(document).ready(function() {
       drawing_els.show();
     else
       drawing_els.hide();
+
+    var ellipse_els = $('#colors_label, #colors');
+    if (mode == 'ellipse')
+      ellipse_els.show();
+    else
+      ellipse_els.hide();
 
     var moving_els = $('#sprites, #placement_size, #place_sprite');
     if (mode == 'moving')

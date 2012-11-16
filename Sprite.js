@@ -4,6 +4,7 @@
 
   function Sprite() {
     this.shapes = [];
+    this.ellipses = [];
     this.sprites = [];
     this.createNewShape();
     this.current_color;
@@ -22,6 +23,11 @@
     'setCurrentColor': function setCurrentColor(color) {
       this.getLastShape().applyColor(color);
       this.current_color = color;
+    },
+
+    'addEllipse': function addEllipse(ellipse) {
+      this.ellipses.push(ellipse);
+      this.trigger('ellipse:add', ellipse);
     },
 
     'addShape': function addShape(shp) {

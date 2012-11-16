@@ -16,6 +16,9 @@ function SVGSprite(sprite) {
   this.sprite.on('shape:add', function(shp) {
   	this.$el.append(new SVGShape(shp).el);
   }.bind(this));
+  this.sprite.on('ellipse:add', function(ellipse) {
+    this.$el.append(new SVGEllipse(ellipse).el);
+  }.bind(this));
   this.sprite.sprites.forEach(function(sprite) {
     this.$el.append(new SVGSprite(sprite).el);
   }.bind(this));
